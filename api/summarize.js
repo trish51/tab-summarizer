@@ -11,7 +11,6 @@ export default async function handler(req, res) {
         const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
         const { text } = body;
 
-        // Calls the ai to summarize the text
         const geminiRes = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
             {
@@ -34,7 +33,6 @@ export default async function handler(req, res) {
         );
         const geminiData = await geminiRes.json();
         res.status(200).json({ debug: geminiData });
-        res.status(200).json({ summary: summary });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
