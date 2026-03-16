@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const pageText = response.text;
 
                 // Sends the page text as a JSON
-                const res = await fetch("tab-summarizer.vercel.app", {
+                const res = await fetch("https://tab-summarizer.vercel.app/api/summarize", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
