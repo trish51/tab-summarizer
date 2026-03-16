@@ -10,18 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
         chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
             const tab = tabs[0];
 
-            await chrome.scripting.executeScript({
+            chrome.scripting.executeScript({
                 target: { tabId: tab.id },
-                files: ["content.js"]
-            });
-
-            // Wait for content script to be ready
-            await new Promise(resolve => setTimeout(resolve, 100));
-
-            chrome.tabs.sendMessage(tab.id, { action: "getPageText" }, async (response) => {
+                func: () => document.body.innerText
+            }, async (results) => {
                 try {
-                    // Guard against empty response
-                    if (!response || !response.text) {
+                    if (!results || !results[0] || !results[0].result) {
                         summaryText.textContent = "Could not read page content. Please refresh and try again.";
                         result.style.display = "block";
                         summarizeBtn.textContent = "Summarize this page";
@@ -29,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         return;
                     }
 
-                    const pageText = response.text.slice(0, 5000);
+                    const pageText = results[0].result.slice(0, 5000);
 
                     const res = await fetch("https://tab-summarizer.vercel.app/api/summarize", {
                         method: "POST",
