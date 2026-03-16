@@ -7,8 +7,9 @@ export default async function handler(req, res) {
         return;
     }
 
-    try{
-        const { text } =req.body;
+    try {
+        const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+        const { text } = body;
 
         // Calls the ai to summarize the text
         const geminiRes = await fetch(
@@ -30,12 +31,11 @@ export default async function handler(req, res) {
                     ]
                 })
             }
-        )
+        );
         const geminiData = await geminiRes.json();
         const summary = geminiData.candidates[0].content.parts[0].text;
         res.status(200).json({ summary: summary });
     } catch (error) {
         res.status(500).json({ error: "Something went wrong" });
     }
-
 }
