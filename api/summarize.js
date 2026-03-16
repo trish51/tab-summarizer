@@ -36,6 +36,6 @@ export default async function handler(req, res) {
         const summary = geminiData.candidates[0].content.parts[0].text;
         res.status(200).json({ summary: summary });
     } catch (error) {
-        res.status(500).json({ error: "Something went wrong" });
+        res.status(500).json({ error: error.message });
     }
 }
