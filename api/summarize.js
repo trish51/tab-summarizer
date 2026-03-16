@@ -12,27 +12,26 @@ export default async function handler(req, res) {
         const { text } = body;
 
         const geminiRes = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${process.env.GEMINI_API_KEY}`,
+            "https://api.groq.com/openai/v1/chat/completions",
             {
-                method: "POST", 
+                method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
                 },
                 body: JSON.stringify({
-                    contents: [
+                    model: "llama3-8b-8192",
+                    messages: [
                         {
-                            parts: [
-                                {
-                                    text: `Please summarize the following webpage content in 3-5 clear sentences:\n\n${text}`
-                                }
-                            ]
+                            role: "user",
+                            content: `Please summarize the following webpage content in 3-5 clear sentences:\n\n${text}`
                         }
                     ]
                 })
             }
         );
-        const geminiData = await geminiRes.json();
-        res.status(200).json({ debug: geminiData });
+        const groqData = await geminiRes.json();
+        res.status(200).json({ debug: groqData });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
