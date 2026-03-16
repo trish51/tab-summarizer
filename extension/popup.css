@@ -57,6 +57,14 @@ button:disabled {
   margin-top: 4px;
 }
 
+#result h2 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #e94560;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
 #summary-text {
   font-size: 14px;
   line-height: 1.8;

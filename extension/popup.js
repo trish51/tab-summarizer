@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             chrome.scripting.executeScript({
                 target: { tabId: tab.id },
-                func: () => document.body.innerText
+                func: () => ({ text: document.body.innerText, title: document.title })
             }, async (results) => {
                 try {
                     if (!results || !results[0] || !results[0].result) {
@@ -23,7 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         return;
                     }
 
-                    const pageText = results[0].result.slice(0, 5000);
+                    const { text: rawText, title } = results[0].result;
+                    const pageText = rawText.slice(0, 5000);
 
                     const res = await fetch("https://tab-summarizer.vercel.app/api/summarize", {
                         method: "POST",
@@ -34,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
 
                     const data = await res.json();
-                    summaryText.innerHTML = data.summary
+                    summaryText.innerHTML = `<h2>${title}</h2>` + data.summary
                         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                         .replace(/^- (.+)/gm, '<li>$1</li>')
                         .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
