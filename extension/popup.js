@@ -12,7 +12,7 @@ summarizeBtn.addEventListener("click", async () => {
             const pageText = response.text;
 
             // Sends the page text as a JSON
-            const res = await fetch("https://your-vercel-url.vercel.app/api/summarize", {
+            const res = await fetch("tab-summarizer.vercel.app", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
