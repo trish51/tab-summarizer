@@ -24,17 +24,11 @@ export default async function handler(req, res) {
                     messages: [
                         {
                             role: "user",
-                            content: `Please summarize the following webpage content using this format:
+                            content: `Summarize the following webpage in exactly 3 bullet points. Be concise, one sentence per bullet point. No intro, no conclusion, just the 3 bullets.
 
-**Main Topic:** One sentence describing what the page is about.
-
-**Key Points:**
-- Point one
-- Point two
-- Point three
-- Point four
-
-**Conclusion:** One sentence takeaway.
+- 
+- 
+-
 
 Webpage content:
 ${text}`
