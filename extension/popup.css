@@ -41,10 +41,13 @@ bottom:hover {
 }
 
 #result {
-    background-color: #16213e;
-    border-radius: 6px;
-    padding: 12px;
-    display: none;
+  background-color: #16213e;
+  border-radius: 6px;
+  padding: 12px;
+  display: none;
+  width: 100%;
+  margin-top: 8px;
+  word-wrap: break-word;
 }
 
 #summary-text {
