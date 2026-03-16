@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
         const { text } = body;
 
-        const geminiRes = await fetch(
+        const groqRes = await fetch(
             "https://api.groq.com/openai/v1/chat/completions",
             {
                 method: "POST",
@@ -24,13 +24,26 @@ export default async function handler(req, res) {
                     messages: [
                         {
                             role: "user",
-                            content: `Please summarize the following webpage content in 3-5 clear sentences:\n\n${text}`
+                            content: `Please summarize the following webpage content using this format:
+
+**Main Topic:** One sentence describing what the page is about.
+
+**Key Points:**
+- Point one
+- Point two
+- Point three
+- Point four
+
+**Conclusion:** One sentence takeaway.
+
+Webpage content:
+${text}`
                         }
                     ]
                 })
             }
         );
-        const groqData = await geminiRes.json();
+        const groqData = await groqRes.json();
         const summary = groqData.choices[0].message.content;
         res.status(200).json({ summary: summary });
     } catch (error) {

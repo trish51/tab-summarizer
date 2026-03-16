@@ -34,7 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
 
                     const data = await res.json();
-                    summaryText.textContent = data.summary;
+                    summaryText.innerHTML = data.summary
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/^- (.+)/gm, '<li>$1</li>')
+                        .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+                        .replace(/\n\n/g, '<br><br>');
                     result.style.display = "block";
 
                     summarizeBtn.textContent = "Summarize this page";
