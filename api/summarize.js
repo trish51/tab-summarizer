@@ -33,6 +33,7 @@ export default async function handler(req, res) {
             }
         );
         const geminiData = await geminiRes.json();
+        console.log("Gemini response:", JSON.stringify(geminiData));
         const summary = geminiData.candidates[0].content.parts[0].text;
         res.status(200).json({ summary: summary });
     } catch (error) {
