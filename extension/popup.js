@@ -8,8 +8,16 @@ document.addEventListener("DOMContentLoaded", () => {
         summarizeBtn.textContent = "Summarizing...";
         summarizeBtn.disabled = true;
 
-        chrome.tabs.query({ active: true, currentWindow: true}, async (tabs) => {
-            chrome.tabs.sendMessage(tabs[0].id, {action: "getPageText"}, async (response) => {
+        chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+            const tab = tabs[0];
+
+            // Inject content script programmatically
+            await chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                files: ["content.js"]
+            });
+
+            chrome.tabs.sendMessage(tab.id, { action: "getPageText" }, async (response) => {
                 const pageText = response.text;
 
                 // Sends the page text as a JSON
@@ -17,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
-                    }, 
+                    },
                     body: JSON.stringify({ text: pageText })
                 });
 
@@ -28,8 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 summarizeBtn.textContent = "Summarize this page";
                 summarizeBtn.disabled = false;
-            })
-        })
-
-    })
+            });
+        });
+    });
 });
