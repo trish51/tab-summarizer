@@ -31,7 +31,8 @@ export default async function handler(req, res) {
             }
         );
         const groqData = await geminiRes.json();
-        res.status(200).json({ debug: groqData });
+        const summary = groqData.choices[0].message.content;
+        res.status(200).json({ summary: summary });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
