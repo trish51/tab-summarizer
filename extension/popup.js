@@ -29,7 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     const res = await fetch("https://tab-summarizer.vercel.app/api/summarize", {
                         method: "POST",
                         headers: {
-                            "Content-Type": "application/json"
+                            "Content-Type": "application/json",
+                            "x-request-id": atob("dHlkZGJodWJmaG5qYmpiZmhieXJqZGFvaHlleWV1cW91aGRubXN4bQ==")
                         },
                         body: JSON.stringify({ text: pageText })
                     });

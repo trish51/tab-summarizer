@@ -1,15 +1,25 @@
-// Forwards text to summarize and recieves the summary back
 export default async function handler(req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
-    
-    if(req.method === "OPTIONS") {
+
+    if (req.method === "OPTIONS") {
         res.status(200).end();
+        return;
+    }
+
+    const requestId = req.headers['x-request-id'];
+    if (requestId !== process.env.API_SECRET) {
+        res.status(401).json({ error: "Unauthorized" });
         return;
     }
 
     try {
         const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
         const { text } = body;
+
+        if (!text || text.length > 10000) {
+            res.status(400).json({ error: "Invalid request" });
+            return;
+        }
 
         const groqRes = await fetch(
             "https://api.groq.com/openai/v1/chat/completions",
