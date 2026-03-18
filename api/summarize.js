@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     console.log("Expected:", process.env.REQUEST_KEY);
 
     const requestId = req.headers['x-request-id'];
-    if (requestId !== process.env.API_SECRET) {
+    if (!requestId || requestId.trim() !== process.env.REQUEST_KEY.trim()) {
         res.status(401).json({ error: "Unauthorized" });
         return;
     }
