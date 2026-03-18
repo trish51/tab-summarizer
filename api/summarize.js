@@ -5,6 +5,8 @@ export default async function handler(req, res) {
         res.status(200).end();
         return;
     }
+    console.log("Received:", req.headers['x-request-id']);
+    console.log("Expected:", process.env.API_SECRET);
 
     const requestId = req.headers['x-request-id'];
     if (requestId !== process.env.API_SECRET) {
