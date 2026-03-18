@@ -5,8 +5,6 @@ export default async function handler(req, res) {
         res.status(200).end();
         return;
     }
-    console.log("Received:", req.headers['x-request-id']);
-    console.log("Expected:", process.env.REQUEST_KEY);
 
     const requestId = req.headers['x-request-id'];
     if (!requestId || requestId.trim() !== process.env.REQUEST_KEY.trim()) {
