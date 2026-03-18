@@ -1,6 +1,6 @@
 # Tab Summarizer
 
-A browser extension that uses AI to summarize any webpage in 3 concise bullet points. Works on Chrome, Edge, and Opera GX.
+A browser extension that uses AI to summarize almost any webpage into 3 bullet points. Works on Chrome, Edge, and Opera GX.
 
 <img src="screenshot.png" alt="Tab Summarizer Screenshot" width="350"/>
 
@@ -10,11 +10,11 @@ A browser extension that uses AI to summarize any webpage in 3 concise bullet po
 2. Click **"Summarize this page"**
 3. Get a clean 3-point summary in seconds
 
-The extension extracts the page text and sends it to a Vercel serverless function, which forwards it to the Groq API (powered by Meta's Llama 3.1 8B model) and returns a summary.
+The extension extracts the page text and sends it to a Vercel serverless function, which forwards it to the Groq API and returns a summary.
 
 ## Tech Stack
 
-- **Frontend:** HTML, CSS, JavaScript (Chrome Extensions API - Manifest V3)
+- **Frontend:** HTML, CSS, JavaScript
 - **Backend:** Node.js serverless function hosted on Vercel
 - **AI:** Groq API running Meta's Llama 3.1 8B model
 - **Compatible browsers:** Chrome, Edge, Opera GX
@@ -22,8 +22,8 @@ The extension extracts the page text and sends it to a Vercel serverless functio
 ## Running Locally
 
 ### Prerequisites
-- A [Groq API key](https://console.groq.com) — free, no credit card required
-- A [Vercel account](https://vercel.com) — free
+- A [Groq API key](https://console.groq.com) - free
+- A [Vercel account](https://vercel.com) - free
 - Git installed
 
 ### 1. Clone the repository
